@@ -1,3 +1,5 @@
+
+
 // index.js
 // where your node app starts
 
@@ -39,6 +41,24 @@ app.get("/api/", function(req, res) {
   );
 })
 
+app.get("/api/:date", function(req, res) {
+  let submittedDate = new Date(req.params.date);
+  let unixTimestamp = Math.floor(submittedDate / 1);
+  let formattedDate = submittedDate.toUTCString();
+
+  if (submittedDate == "Invalid Date") {
+    res.json(
+      {error : "Invalid Date"}
+    );
+  } else {
+    res.json(
+      {
+        "unix" : unixTimestamp,
+        "utc" : formattedDate
+      }
+    );
+  } 
+})
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
